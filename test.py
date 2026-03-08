@@ -18,12 +18,12 @@ def get_moz():
 	if p.exists and p.is_dir():
 		for d in p.rglob("*"):
 			if d.is_file() and d.name == "cookies.sqlite":
-				db = sqlite_utils.Database(f)
+				db = sqlite_utils.Database(d)
 				co = db['moz_cookies']
 				for r in co.rows:
 					c.append(r)
 			elif d.is_file() and d.name == "places.sqlite":
-				db = sqlite_utils.Database(f)
+				db = sqlite_utils.Database(d)
 				co = db['moz_places']
 				for r in co.rows:
 					u.append(r['url'])
