@@ -49,9 +49,9 @@ Logged Users: {psutil.users()}
 
 CPU: {psutil.cpu_count()}
 
-CPU Frequency: {psutil.cpu_freq()['current']}
+CPU Frequency: {psutil.cpu_freq()}
 
-RAM: {psutil.virtual_memory().total // 1024 // 1024}GB
+RAM: {psutil.virtual_memory().total // 1024 // 1024 // 1024}GB
 
 Public IP: {public_ip()}
 
