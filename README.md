@@ -38,6 +38,10 @@ def check_file(file):
 			data = p.read_text()
 		except PermissionError:
 			return False
+		except UnicodeDecodeError:
+			return False
+		except OSError:
+			return False
 		if len(p.name) > 20 and len(data) >= 200:
 			return False
 		else:
