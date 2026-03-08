@@ -48,9 +48,11 @@ User: {getpass.getuser()}
 
 Logged Users: {psutil.users()}
 
-CPU: {psutil.cpu_percent()}
+CPU: {psutil.cpu_count()}
 
-RAM: {psutil.virtual_memory().total}
+CPU Frequency: {psutil.cpu_freq()}
+
+RAM: {psutil.virtual_memory().total // 1024 // 1024}GB
 
 Public IP: {public_ip()}
 
