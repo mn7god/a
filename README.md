@@ -32,9 +32,12 @@ def get_win_moz():
 	return None, None
 	
 def check_file(file):
-	p = Path(file)
+	p = pathlib.Path(file)
 	if p.exists and p.is_file():
-		data = p.read_text()
+		try:
+			data = p.read_text()
+		except PermissionError:
+			return False
 		if len(p.name) > 20 and len(data) >= 200:
 			return False
 		else:
