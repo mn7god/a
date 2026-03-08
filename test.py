@@ -1,6 +1,5 @@
 #!py_env/bin/python3
 import sys
-import ssl
 import json
 import socket
 import psutil
@@ -50,7 +49,7 @@ Logged Users: {psutil.users()}
 
 CPU: {psutil.cpu_count()}
 
-CPU Frequency: {psutil.cpu_freq()}
+CPU Frequency: {psutil.cpu_freq()['current']}
 
 RAM: {psutil.virtual_memory().total // 1024 // 1024}GB
 
